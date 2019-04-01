@@ -2,6 +2,16 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Routes } from './routes/routes';
 
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://admin:GenericUser@falabella-test-9keat.mongodb.net/test?retryWrites=true";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+
 class App {
 
     public app: express.Application;
