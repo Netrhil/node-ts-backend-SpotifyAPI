@@ -1,13 +1,11 @@
+import { Request, Response, Router } from "express";
 
-import {Request, Response} from "express";
+const router = Router();
 
-export class Routes {       
-    public routes(app): void {          
-        app.route('/')
-        .get((req: Request, res: Response) => {            
-            res.status(200).send({
-                message: 'GET request successfulll!!!!'
-            })
-        })               
-    }
-}
+router.get("/", (req: Request, res: Response) => {
+    res.status(200).send({
+        message: "GET request successful!!!"
+      });
+});
+
+export default router;
