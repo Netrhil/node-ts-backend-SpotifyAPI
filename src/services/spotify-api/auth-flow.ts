@@ -4,7 +4,7 @@ import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET} from '../secrets';
 export interface IAuthClass {
     getToken() : Promise<string>
 }
-export class AuthToken implements IAuthClass {
+export class AuthService implements IAuthClass {
    
     public expired : boolean;
     private spotifyApi : any;

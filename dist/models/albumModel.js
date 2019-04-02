@@ -9,3 +9,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = __importStar(require("mongoose"));
 const Schema = mongoose.Schema;
+exports.albumSchema = new Schema({
+    album_type: {
+        type: String,
+        required: true,
+    },
+    cover: {
+        type: {
+            url: String,
+            height: Number,
+            width: Number
+        },
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
+});

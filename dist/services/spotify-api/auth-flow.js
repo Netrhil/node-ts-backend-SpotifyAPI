@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const spotify_web_api_node_1 = __importDefault(require("spotify-web-api-node"));
 const secrets_1 = require("../secrets");
-class AuthToken {
+class AuthService {
     constructor() {
         this.spotifyApi = new spotify_web_api_node_1.default({
             clientId: secrets_1.SPOTIFY_CLIENT_ID,
@@ -33,4 +33,4 @@ class AuthToken {
         });
     }
 }
-exports.AuthToken = AuthToken;
+exports.AuthService = AuthService;
