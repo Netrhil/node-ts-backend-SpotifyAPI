@@ -2,9 +2,9 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET} from '../secrets';
 
 export interface IAuthClass {
-    getToken() : Promise<string> 
+    getToken() : Promise<string>
 }
-export class AuthApi implements IAuthClass {
+export class AuthToken implements IAuthClass {
    
     public expired : boolean;
     private spotifyApi : any;

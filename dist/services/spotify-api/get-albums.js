@@ -12,25 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const spotify_web_api_node_1 = __importDefault(require("spotify-web-api-node"));
-const secrets_1 = require("../secrets");
-class AuthToken {
-    constructor() {
-        this.spotifyApi = new spotify_web_api_node_1.default({
-            clientId: secrets_1.SPOTIFY_CLIENT_ID,
-            clientSecret: secrets_1.SPOTIFY_CLIENT_SECRET
-        });
+class SearchInSpotify {
+    constructor(token) {
+        this.spotifyApi = new spotify_web_api_node_1.default({});
+        this.spotifyApi.setAccessToken(token);
     }
-    getToken() {
+    getAlbums(params) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const token = yield this.spotifyApi.clientCredentialsGrant();
-                return token.body['access_token'];
+                const results = yield this.spotifyApi.searchAlbums(params.q, { limit: 20, offset: params.offset });
+                return this.parseAlbumObject(results.body.albums.items);
             }
             catch (error) {
-                console.log('Something went wrong when retrieving an access token', error);
                 return error;
             }
         });
     }
+    parseAlbumObject(arrayAlbumOBject) {
+        const parsedAlbums = arrayAlbumOBject.map(e => ({
+            album_type: e.album_type,
+            cover: e.images[1],
+            name: e.name,
+            release_date: e.release_date,
+            artist: e.artists[0].name
+        }));
+        return parsedAlbums;
+    }
 }
-exports.AuthToken = AuthToken;
+exports.SearchInSpotify = SearchInSpotify;
