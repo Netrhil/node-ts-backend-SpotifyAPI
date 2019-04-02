@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const auth_flow_1 = require("../services/spotify-api/auth-flow");
 const get_albums_1 = require("../services/spotify-api/get-albums");
+const mongodb_service_1 = require("../services/atlas-mongo/mongodb-service");
 class SearchController {
     searchAlbum(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -19,7 +20,6 @@ class SearchController {
                 const spotifyApi = new get_albums_1.SearchInSpotify(token);
                 const regexUrl = /^\/SearchAlbum\?query=[A-Za-z0-9]+&offset=[0-9]+$/;
                 const url = req.url;
-                console.log(regexUrl.test(url));
                 if (!regexUrl.test(url)) {
                     return res.status(400).send({
                         success: 'false',
@@ -28,9 +28,11 @@ class SearchController {
                 }
                 else {
                     const albums = yield spotifyApi.getAlbums({ q: req.query.query, offset: req.query.offset });
+                    const mongoS = new mongodb_service_1.MongoService();
+                    mongoS.saveAlbums(albums);
                     return res.status(201).send({
                         success: 'true',
-                        message: 'Yayy~!',
+                        message: 'success',
                         albums
                     });
                 }

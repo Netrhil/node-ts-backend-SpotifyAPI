@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-export const albumSchema = new Schema({
+const albumSchema = new Schema({
     album_type: {
      type: String,
      required: true,
@@ -20,3 +20,5 @@ export const albumSchema = new Schema({
      required: true
     }
    });
+
+export const Album = mongoose.model('Album', albumSchema);

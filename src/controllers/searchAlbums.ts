@@ -1,9 +1,9 @@
-import * as mongoose from 'mongoose';
+
 import { Request, Response } from 'express';
 
 import { AuthService, IAuthClass } from '../services/spotify-api/auth-flow';
 import { SearchInSpotify } from '../services/spotify-api/get-albums';
-import { albumSchema } from '../models/albumModel';
+import { MongoService } from '../services/atlas-mongo/mongodb-service';
 
 interface ISearchClass {
     searchAlbum(req: Request , res: Response) : Promise<Response>
@@ -28,9 +28,13 @@ export class SearchController implements ISearchClass {
 
             } else  {
                 const albums  = await spotifyApi.getAlbums({ q: req.query.query, offset: req.query.offset });
+                const mongoS = new MongoService();
+                
+                mongoS.saveAlbums(albums);
+
                 return res.status(201).send({
                     success: 'true',
-                    message: 'Yayy~!',
+                    message: 'success',
                     albums
                 })
             }
