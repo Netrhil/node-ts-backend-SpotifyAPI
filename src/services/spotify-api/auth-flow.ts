@@ -2,7 +2,7 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET} from '../secrets';
 
 export interface IAuthClass {
-    getToken() : Promise<any> 
+    getToken() : Promise<string> 
 }
 export class AuthApi implements IAuthClass {
    
@@ -17,14 +17,13 @@ export class AuthApi implements IAuthClass {
     }
 
     public async getToken() {
-
         try {
             const token =  await this.spotifyApi.clientCredentialsGrant();
             return token.body['access_token'];
             
         } catch (error) {
             console.log('Something went wrong when retrieving an access token', error);
-                return error;
+            return error;
         }
 
     }
