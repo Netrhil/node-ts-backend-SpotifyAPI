@@ -17,7 +17,7 @@ export class SearchController implements ISearchClass {
             const token = await auth.getToken();
             const spotifyApi = new SearchInSpotify(token);
 
-            const regexUrl = /^\/SearchAlbum\?query=[A-Za-z0-9]+&offset=[0-9]+$/;
+            const regexUrl = /^\/SearchAlbum\?query=.+&offset=[0-9]+$/;
             const url = req.url;
 
             if( !regexUrl.test(url) ) {
@@ -27,15 +27,17 @@ export class SearchController implements ISearchClass {
                 });
 
             } else  {
-                const albums  = await spotifyApi.getAlbums({ q: req.query.query, offset: req.query.offset });
+                const results  = await spotifyApi.getAlbums({ q: req.query.query, offset: req.query.offset });
                 const mongoS = new MongoService();
                 
-                mongoS.saveAlbums(albums);
+                if (results.albums.length > 0) {
+                    mongoS.saveAlbums(results.albums);
+                }
 
                 return res.status(201).send({
                     success: 'true',
                     message: 'success',
-                    albums
+                    ...results
                 })
             }
             

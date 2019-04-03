@@ -18,7 +18,7 @@ class SearchController {
                 const auth = new auth_flow_1.AuthService();
                 const token = yield auth.getToken();
                 const spotifyApi = new get_albums_1.SearchInSpotify(token);
-                const regexUrl = /^\/SearchAlbum\?query=[A-Za-z0-9]+&offset=[0-9]+$/;
+                const regexUrl = /^\/SearchAlbum\?query=.+&offset=[0-9]+$/;
                 const url = req.url;
                 if (!regexUrl.test(url)) {
                     return res.status(400).send({
@@ -27,14 +27,12 @@ class SearchController {
                     });
                 }
                 else {
-                    const albums = yield spotifyApi.getAlbums({ q: req.query.query, offset: req.query.offset });
+                    const results = yield spotifyApi.getAlbums({ q: req.query.query, offset: req.query.offset });
                     const mongoS = new mongodb_service_1.MongoService();
-                    mongoS.saveAlbums(albums);
-                    return res.status(201).send({
-                        success: 'true',
-                        message: 'success',
-                        albums
-                    });
+                    if (results.albums.length > 0) {
+                        mongoS.saveAlbums(results.albums);
+                    }
+                    return res.status(201).send(Object.assign({ success: 'true', message: 'success' }, results));
                 }
             }
             catch (error) {

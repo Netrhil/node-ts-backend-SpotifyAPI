@@ -21,7 +21,11 @@ class SearchInSpotify {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const results = yield this.spotifyApi.searchAlbums(params.q, { limit: 20, offset: params.offset });
-                return this.parseAlbumObject(results.body.albums.items);
+                const responde = {
+                    albums: this.parseAlbumObject(results.body.albums.items),
+                    next_offset: results.body.albums.next ? Number(params.offset) + 20 : "false"
+                };
+                return responde;
             }
             catch (error) {
                 return error;
