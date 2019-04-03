@@ -21,12 +21,14 @@ export class SearchController implements ISearchClass {
             const url = req.url;
 
             if( !regexUrl.test(url) ) {
+
                 return res.status(400).send({
                     success: 'false',
                     message: 'Missing parameters'
                 });
 
-            } else  {
+            } else {
+                
                 const results  = await spotifyApi.getAlbums({ q: req.query.query, offset: req.query.offset });
                 const mongoS = new MongoService();
                 
