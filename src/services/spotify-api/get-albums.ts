@@ -7,7 +7,7 @@ interface IParamsQuery {
 }
 interface IAlbumsResponse {
     albums: IAlbum[]
-    next_offset : "false" | number
+    next_offset : false | number
 }
 
 export interface ISearchInSpotify {
@@ -29,7 +29,7 @@ export class SearchInSpotify {
 
             const responde : IAlbumsResponse = {
                 albums: this.parseAlbumObject(results.body.albums.items),
-                next_offset: results.body.albums.next ? Number(params.offset) + 20 : "false"
+                next_offset: results.body.albums.next ? Number(params.offset) + 20 : false
             }
 
             return responde;
