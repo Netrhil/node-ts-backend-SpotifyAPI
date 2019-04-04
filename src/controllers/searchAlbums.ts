@@ -37,7 +37,7 @@ export class SearchController implements ISearchClass {
                 }
 
                 return res.status(201).send({
-                    success: 'true',
+                    success: 'ok',
                     message: 'success',
                     ...results
                 })
@@ -46,7 +46,7 @@ export class SearchController implements ISearchClass {
         } catch (error) {
             console.log("error", error);
             return res.status(400).send({
-                success: 'false',
+                success: 'error',
                 message: error
             });
         }
