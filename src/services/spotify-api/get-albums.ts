@@ -44,7 +44,7 @@ export class SearchInSpotify {
 
         const parsedAlbums : IAlbum[] = arrayAlbumOBject.map( e => 
             (
-                {
+                {   id_spotify: e.id,
                     album_type : e.album_type,
                     cover : e.images[1],
                     name : e.name,

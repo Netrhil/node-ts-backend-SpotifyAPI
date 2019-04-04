@@ -5,6 +5,7 @@ interface ICover {
 }
 
 export interface IAlbum {
+    id_spotify: string
     album_type : string
     cover : ICover
     name : string

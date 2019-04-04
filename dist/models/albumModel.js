@@ -10,6 +10,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = __importStar(require("mongoose"));
 const Schema = mongoose.Schema;
 const albumSchema = new Schema({
+    id_spotify: {
+        type: String,
+        required: true,
+    },
     album_type: {
         type: String,
         required: true,
