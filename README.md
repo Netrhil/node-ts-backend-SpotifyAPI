@@ -1,4 +1,4 @@
-# node-ts-backend-SpotifyAPI
+# Node Ts backend SpotifyAPI
 
 Api rest server for search albums with spotify API, made with Nodejs , TypeScript , MongoDB and Express.
 
